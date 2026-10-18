@@ -125,3 +125,118 @@ export function sampleEntries(now = new Date()): Entry[] {
     },
   ];
 }
+
+/**
+ * The entries created by hand while manually testing every entry kind and
+ * cross-line link. Kept as code (not transferred between browsers) so
+ * loading it works regardless of which browser/profile you're in.
+ */
+export function testEntries(now = new Date()): Entry[] {
+  const at = (hour: number, minute: number, second = 0) => {
+    const d = new Date(now);
+    d.setHours(hour, minute, second, 0);
+    return d.toISOString();
+  };
+  const updatedAt = (hour: number, minute: number, second: number) => at(hour, minute, second);
+
+  return [
+    {
+      id: 'test-thinking-in-systems',
+      line: 'input',
+      kind: 'highlight',
+      occurredAt: at(10, 10),
+      updatedAt: updatedAt(10, 16, 31),
+      title: 'Thinking in Systems',
+      quote: "A system's behavior cannot be known just by knowing the elements of which the system is made.",
+      body: 'This connects to how I think about org design at work.',
+      sourceUrl: 'https://example.com/thinking-in-systems',
+      links: ['test-why-we-sleep'],
+      aiVisible: true,
+    },
+    {
+      id: 'test-why-we-sleep',
+      line: 'input',
+      kind: 'article',
+      occurredAt: at(10, 11),
+      updatedAt: updatedAt(10, 11, 38),
+      title: 'Why We Sleep — chapter on dreams',
+      body: '',
+      links: ['test-thinking-in-systems'],
+      aiVisible: true,
+    },
+    {
+      id: 'test-kurzgesagt',
+      line: 'input',
+      kind: 'video',
+      occurredAt: at(10, 11),
+      updatedAt: updatedAt(10, 12, 15),
+      title: 'Kurzgesagt — The Egg',
+      body: 'Reframed how I think about identity across a lifetime.',
+      sourceUrl: 'https://youtube.com/watch?v=h6fcK_fRYaI',
+      links: [],
+      aiVisible: true,
+    },
+    {
+      id: 'test-midnight-library',
+      line: 'input',
+      kind: 'book',
+      occurredAt: at(10, 13),
+      updatedAt: updatedAt(10, 13, 59),
+      title: 'The Midnight Library',
+      body: 'Every life contains many potential futures.',
+      links: [],
+      aiVisible: true,
+    },
+    {
+      id: 'test-huberman',
+      line: 'input',
+      kind: 'podcast',
+      occurredAt: at(10, 13),
+      updatedAt: updatedAt(10, 14, 8),
+      title: 'Huberman Lab — Focus Toolkit',
+      body: 'The 90-minute ultradian rhythm point is worth testing.',
+      links: [],
+      aiVisible: true,
+    },
+    {
+      id: 'test-walk-note',
+      line: 'input',
+      kind: 'note',
+      occurredAt: at(10, 14),
+      updatedAt: updatedAt(10, 14, 20),
+      body: 'Random thought: most of my best ideas happen on walks, not at the desk.',
+      links: [],
+      aiVisible: true,
+    },
+    {
+      id: 'test-scattered',
+      line: 'journal',
+      kind: 'thought',
+      occurredAt: at(10, 14),
+      updatedAt: updatedAt(10, 14, 46),
+      body: 'Feeling a bit scattered today, too many open threads at once.',
+      links: [],
+      aiVisible: false,
+    },
+    {
+      id: 'test-zoom-idea',
+      line: 'journal',
+      kind: 'idea',
+      occurredAt: at(10, 15),
+      updatedAt: updatedAt(10, 15, 32),
+      body: "What if the app's zoom levels mirrored the systems-thinking idea of nested loops — each zoom level is a different feedback loop.",
+      links: [],
+      aiVisible: true,
+    },
+    {
+      id: 'test-carousel-proud',
+      line: 'journal',
+      kind: 'feeling',
+      occurredAt: at(10, 15),
+      updatedAt: updatedAt(10, 15, 43),
+      body: 'Proud of getting the carousel feeling smooth today.',
+      links: [],
+      aiVisible: false,
+    },
+  ];
+}

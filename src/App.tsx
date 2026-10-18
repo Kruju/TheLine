@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { Entry, WritableLineId } from './types';
 import { LINES } from './lines';
 import { matchesQuery, sortEntries, useAppState } from './store';
-import { sampleEntries } from './sample';
+import { sampleEntries, testEntries } from './sample';
 import { Carousel } from './components/Carousel';
 import { LineView } from './components/LineView';
 import { AiLineView } from './components/AiLineView';
@@ -169,6 +169,12 @@ export function App() {
           onLoadSample={() => {
             const ids = new Set(state.entries.map((e) => e.id));
             dispatch({ type: 'replaceEntries', entries: [...state.entries, ...sampleEntries().filter((e) => !ids.has(e.id))] });
+            setSettingsOpen(false);
+          }}
+          onLoadTestData={() => {
+            const ids = new Set(state.entries.map((e) => e.id));
+            dispatch({ type: 'replaceEntries', entries: [...state.entries, ...testEntries().filter((e) => !ids.has(e.id))] });
+            if (!state.settings.birthDate) dispatch({ type: 'settings', settings: { birthDate: '1994-01-15' } });
             setSettingsOpen(false);
           }}
           onErase={() => dispatch({ type: 'replaceEntries', entries: [] })}

@@ -6,11 +6,12 @@ interface Props {
   entryCount: number;
   onChange: (settings: Partial<Settings>) => void;
   onLoadSample: () => void;
+  onLoadTestData: () => void;
   onErase: () => void;
   onClose: () => void;
 }
 
-export function SettingsDialog({ settings, entryCount, onChange, onLoadSample, onErase, onClose }: Props) {
+export function SettingsDialog({ settings, entryCount, onChange, onLoadSample, onLoadTestData, onErase, onClose }: Props) {
   return (
     <Modal title="Settings" onClose={onClose}>
       <div className="settings">
@@ -32,6 +33,7 @@ export function SettingsDialog({ settings, entryCount, onChange, onLoadSample, o
           </small>
           <div className="settings-actions">
             <button className="btn" onClick={onLoadSample}>Add sample entries</button>
+            <button className="btn" onClick={onLoadTestData}>Load Claude's test entries</button>
             <button
               className="btn danger"
               onClick={() => confirm('Erase every entry? This cannot be undone.') && onErase()}
