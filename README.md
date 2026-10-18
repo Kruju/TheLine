@@ -1,67 +1,46 @@
-# Habit Streaks 🔥
+# Lifelines
 
-An offline habit tracker, to-do list and timer for Android, with a dark look and a hot-pink accent.
+A timeline of everything that shapes your thinking, starting at your birth date.
+Instead of folders, everything sits on one of three lines:
 
-- **Today**: a scrollable date strip plus everything scheduled for that day. Tap the circle to check an item off.
-- **Habits** can be evaluated four ways:
-  - **Yes/no**
-  - **Numeric**, e.g. 8 glasses of water
-  - **Timer**, e.g. 30 min of reading, with a built-in stopwatch
-  - **Checklist** of sub-items
-- **Flexible schedules**: every day, specific weekdays, N days per week, specific days of the month, or every N days. Each schedule can have a start date and an optional end date.
-- **Step-by-step creation**: category → how to evaluate → define → how often → when (plus reminder and priority).
-- **Statistics** for each habit: a monthly calendar, habit score, current and best streak, completion counts and a 6-month bar chart.
-- **Tasks**: one-off tasks with a date and priority, plus recurring tasks (they repeat on a schedule but have no stats).
-- **Categories**: 15 built-in categories plus your own, each with an icon and color.
-- **Timer tab** with a stopwatch and a countdown with presets.
-- **Reminders** for each habit, sent only if the habit isn't done yet.
-- **Backup & restore** to a JSON file.
+| Line | Direction | What goes on it |
+| --- | --- | --- |
+| **Input** | outside → in | Book highlights, articles, videos, podcasts, plus your notes on them |
+| **Journal** | inside → out | Your own thoughts, ideas and feelings |
+| **Companion** | connecting | An AI that reads only what you share and links what you can't (coming later) |
 
-All data stays on your phone in a single JSON file in the app's private storage.
-There is no account, no network access and no tracking.
+## What works today
 
-## Install on your phone
+- **Turn between lines**: swipe left/right on touch, or use the tabs, the arrow keys, or a click on a neighbouring line.
+- **Scroll through time** within a line, grouped by day, with your age and week of life once a birth date is set.
+- **Link entries** across lines. *Reflect on this →* on an input entry starts a journal entry already linked to it.
+- **All view**: the three lines side by side, with links drawn as threads between them.
+- **Search** across every entry.
+- **Privacy per entry**: each entry is either *AI can see* or *Private*. Journal entries start private.
+- **Backdate** any entry with its *When* field.
 
-1. On your phone, open this repo's **Releases** page on GitHub and pick the newest release.
-2. Tap `HabitStreaks.apk` to download it.
-3. Open the downloaded file. If Android asks, allow your browser or file manager to *install unknown apps*.
+Data lives only in this browser's local storage on this computer. There are no accounts and no network calls.
+Settings has *Add sample entries* to try it out and *Erase everything* to start clean.
 
-Requires Android 8.0 or newer.
+Keyboard: `←` `→` turn lines, `N` new entry, `Ctrl/⌘ + Enter` save, `Esc` close.
 
-## Seamless updates (optional, recommended)
+## Run it
 
-Android only installs an update over an existing app when both are signed with the same key.
-Without a key of your own, each CI build is signed with a throwaway debug key. To update, you would then have to
-export a backup, uninstall the app, install the new APK and import the backup.
-
-To fix this once, create a key on your computer:
+Requires Node 20 or newer.
 
 ```sh
-keytool -genkeypair -keystore habits.keystore -storetype PKCS12 -alias habits \
-  -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Habit Streaks"
-base64 -w0 habits.keystore   # on macOS: base64 -i habits.keystore
+npm install
+npm run dev      # http://localhost:5173
 ```
-
-Then add two secrets under **Settings → Secrets and variables → Actions**:
-
-| Secret | Value |
-| --- | --- |
-| `SIGNING_KEYSTORE_BASE64` | the base64 output |
-| `SIGNING_PASSWORD` | the password you picked in keytool |
-
-Keep `habits.keystore` somewhere safe, and never commit it.
-
-## Build
-
-Every push runs `.github/workflows/build.yml`, which builds the APK and publishes a GitHub release.
-
-To build locally with the Android SDK installed:
 
 ```sh
-./gradlew assembleRelease
-# -> app/build/outputs/apk/release/app-release.apk
+npm test         # unit tests
+npm run build    # typecheck + production build into dist/
 ```
 
-## Tech
+## Code map
 
-Kotlin, Jetpack Compose and Material 3. There are no database or network libraries: data is stored with `org.json` and `AtomicFile`.
+- `src/types.ts`: the single `Entry` model. The line is just a field.
+- `src/lines.ts`: the three lines and the kinds of entry each accepts.
+- `src/store.ts`: state reducer, local storage, link and search helpers.
+- `src/components/`: `Carousel` (the turning lines), `LineView`, `Overview`, `Composer`, `EntryCard`, `AiLineView`.
