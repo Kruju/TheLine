@@ -53,6 +53,19 @@ export function fromLocalInput(value: string): string {
   return new Date(value).toISOString();
 }
 
+/** Years ago `iso` falls on the same month/day as `now`, or undefined if it isn't a past anniversary. */
+export function anniversaryYears(iso: string, now = new Date()): number | undefined {
+  const d = new Date(iso);
+  if (d.getMonth() !== now.getMonth() || d.getDate() !== now.getDate()) return undefined;
+  const years = now.getFullYear() - d.getFullYear();
+  return years > 0 ? years : undefined;
+}
+
+/** Entries that occurred on this same month/day in a past year. Keeps input order (recent year first, if pre-sorted). */
+export function onThisDay<T extends { occurredAt: string }>(items: T[], now = new Date()): T[] {
+  return items.filter((item) => anniversaryYears(item.occurredAt, now) !== undefined);
+}
+
 /** Groups entries (already sorted) by local day, keeping order. */
 export function groupByDay<T extends { occurredAt: string }>(items: T[]): [string, T[]][] {
   const groups = new Map<string, T[]>();

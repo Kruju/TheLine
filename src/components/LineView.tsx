@@ -3,6 +3,7 @@ import type { Entry } from '../types';
 import type { LineDef } from '../lines';
 import { dayLabel, groupByDay, lifeLabel } from '../dates';
 import { EntryCard } from './EntryCard';
+import { OnThisDay } from './OnThisDay';
 
 interface Props {
   line: LineDef;
@@ -41,6 +42,8 @@ export function LineView(props: Props) {
         <h2>{line.name}</h2>
         <p className="line-tagline">{line.tagline}</p>
       </header>
+
+      {!searching && <OnThisDay entries={allEntries} onJump={props.onJump} />}
 
       {entries.length === 0 ? (
         <div className="empty">

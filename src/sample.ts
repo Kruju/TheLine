@@ -8,9 +8,36 @@ export function sampleEntries(now = new Date()): Entry[] {
     d.setHours(hour, minute, 0, 0);
     return d.toISOString();
   };
+  /** Same month/day as `now`, `yearsAgo` years back — exercises the "on this day" view. */
+  const anniversary = (yearsAgo: number, hour: number, minute = 0) => {
+    const d = new Date(now);
+    d.setFullYear(d.getFullYear() - yearsAgo);
+    d.setHours(hour, minute, 0, 0);
+    return d.toISOString();
+  };
   const base = { updatedAt: now.toISOString(), links: [] as string[] };
 
   return [
+    {
+      ...base,
+      id: 'sample-anniversary-1y',
+      line: 'input',
+      kind: 'highlight',
+      occurredAt: anniversary(1, 20, 0),
+      title: 'Atomic Habits',
+      quote: 'You do not rise to the level of your goals. You fall to the level of your systems.',
+      body: 'Started trying to build a system instead of chasing one more goal.',
+      aiVisible: true,
+    },
+    {
+      ...base,
+      id: 'sample-anniversary-2y',
+      line: 'journal',
+      kind: 'thought',
+      occurredAt: anniversary(2, 9, 0),
+      body: 'Two years ago today: still figuring out what this timeline idea was even for.',
+      aiVisible: false,
+    },
     {
       ...base,
       id: 'sample-seneca',

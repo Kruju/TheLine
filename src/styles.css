@@ -198,6 +198,36 @@ button { cursor: pointer; }
 }
 .line-tagline { margin: 0; color: var(--muted); font-size: 0.9rem; }
 
+/* ---------- On this day ---------- */
+
+.otd { margin: 0 0 28px; }
+.otd-head {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.otd-list { display: flex; flex-direction: column; }
+.otd-item {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 9px 2px;
+  border: 0;
+  border-bottom: 1px solid var(--hairline);
+  border-radius: 0;
+  background: transparent;
+  color: var(--text);
+  font-size: 0.86rem;
+  text-align: left;
+}
+.otd-item:hover { opacity: 0.75; }
+.otd-years { flex: none; color: var(--faint); font-size: 0.74rem; font-variant-numeric: tabular-nums; }
+.otd-glyph { flex: none; color: var(--muted); }
+.otd-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
 .rail { position: relative; padding-left: 20px; }
 .rail::before {
   content: '';

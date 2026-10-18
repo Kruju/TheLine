@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { dayLabel, groupByDay, lifeLabel } from './dates';
+import { anniversaryYears, dayLabel, groupByDay, lifeLabel, onThisDay } from './dates';
 
 describe('lifeLabel', () => {
   it('gives age and week of life', () => {
@@ -28,5 +28,31 @@ describe('groupByDay', () => {
     const at = (d: number, h: number) => ({ occurredAt: new Date(2026, 0, d, h).toISOString() });
     const groups = groupByDay([at(3, 9), at(3, 8), at(2, 20)]);
     expect(groups.map(([, items]) => items.length)).toEqual([2, 1]);
+  });
+});
+
+describe('anniversaryYears', () => {
+  const now = new Date(2026, 9, 18, 12);
+
+  it('matches same month/day in a past year', () => {
+    expect(anniversaryYears(new Date(2024, 9, 18).toISOString(), now)).toBe(2);
+    expect(anniversaryYears(new Date(2025, 9, 18, 7).toISOString(), now)).toBe(1);
+  });
+
+  it('is undefined for a different day, or the same year', () => {
+    expect(anniversaryYears(new Date(2024, 9, 19).toISOString(), now)).toBeUndefined();
+    expect(anniversaryYears(new Date(2026, 9, 18).toISOString(), now)).toBeUndefined();
+  });
+});
+
+describe('onThisDay', () => {
+  it('keeps only past-year anniversaries', () => {
+    const now = new Date(2026, 9, 18, 12);
+    const items = [
+      { occurredAt: new Date(2024, 9, 18).toISOString(), id: 'a' },
+      { occurredAt: new Date(2026, 9, 17).toISOString(), id: 'b' },
+      { occurredAt: new Date(2025, 9, 18).toISOString(), id: 'c' },
+    ];
+    expect(onThisDay(items, now).map((i) => i.id)).toEqual(['a', 'c']);
   });
 });
