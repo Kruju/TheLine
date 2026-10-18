@@ -11,7 +11,11 @@ const PLANNED = [
 
 export function AiLineView({ line, entries }: { line: LineDef; entries: Entry[] }) {
   const shared = entries.filter((e) => e.aiVisible).length;
-  const links = entries.reduce((n, e) => n + e.links.length, 0);
+  // Links are stored on both sides of a pair, so count distinct pairs, not raw references.
+  const linkPairs = new Set(
+    entries.flatMap((e) => e.links.map((id) => [e.id, id].sort().join('|'))),
+  );
+  const links = linkPairs.size;
 
   return (
     <div className="line-view line-ai">

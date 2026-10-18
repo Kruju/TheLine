@@ -55,9 +55,11 @@ export function linkedIds(entries: Entry[], id: string): string[] {
   return [...out].filter((l) => entries.some((e) => e.id === l));
 }
 
-/** Newest first. */
+/** Newest first. Entries tied on occurredAt (same-minute captures) break by most recently saved. */
 export function sortEntries(entries: Entry[]): Entry[] {
-  return [...entries].sort((a, b) => b.occurredAt.localeCompare(a.occurredAt));
+  return [...entries].sort(
+    (a, b) => b.occurredAt.localeCompare(a.occurredAt) || b.updatedAt.localeCompare(a.updatedAt),
+  );
 }
 
 export function matchesQuery(entry: Entry, query: string): boolean {

@@ -33,16 +33,18 @@ export interface KindDef {
   glyph: string;
   /** Which optional fields the composer shows for this kind. */
   fields: { title?: boolean; quote?: boolean; url?: boolean };
+  /** Placeholder for the title field, when shown. */
+  titlePlaceholder?: string;
 }
 
 export const KINDS: Record<WritableLineId, Partial<Record<EntryKind, KindDef>>> = {
   input: {
-    highlight: { label: 'Highlight', glyph: '❝', fields: { title: true, quote: true, url: true } },
-    article: { label: 'Article', glyph: '▤', fields: { title: true, quote: true, url: true } },
-    video: { label: 'Video', glyph: '▶', fields: { title: true, url: true } },
-    book: { label: 'Book', glyph: '▮', fields: { title: true, quote: true } },
-    podcast: { label: 'Podcast', glyph: '◉', fields: { title: true, url: true } },
-    note: { label: 'Note', glyph: '✎', fields: { title: true, url: true } },
+    highlight: { label: 'Highlight', glyph: '❝', fields: { title: true, quote: true, url: true }, titlePlaceholder: 'Book, article or video' },
+    article: { label: 'Article', glyph: '▤', fields: { title: true, quote: true, url: true }, titlePlaceholder: 'Article title' },
+    video: { label: 'Video', glyph: '▶', fields: { title: true, url: true }, titlePlaceholder: 'Video title' },
+    book: { label: 'Book', glyph: '▮', fields: { title: true, quote: true }, titlePlaceholder: 'Book title' },
+    podcast: { label: 'Podcast', glyph: '◉', fields: { title: true, url: true }, titlePlaceholder: 'Podcast or episode title' },
+    note: { label: 'Note', glyph: '✎', fields: { title: true, url: true }, titlePlaceholder: 'Optional' },
   },
   journal: {
     thought: { label: 'Thought', glyph: '◌', fields: {} },

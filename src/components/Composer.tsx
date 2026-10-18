@@ -106,7 +106,7 @@ export function Composer({ initial, entries, onSave, onDelete, onClose }: Props)
         {fields.title && (
           <label className="field">
             <span>{line === 'input' ? 'Title or source' : 'Title'}</span>
-            <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder={line === 'input' ? 'Book, article or video' : 'Optional'} />
+            <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder={kindDef(line, kind).titlePlaceholder ?? 'Optional'} />
           </label>
         )}
         {fields.quote && (
