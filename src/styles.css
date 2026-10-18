@@ -23,6 +23,26 @@
 }
 
 * { box-sizing: border-box; }
+
+/* ---------- Minimal scrollbar ---------- */
+
+.line-view, .overview, .modal {
+  scrollbar-width: thin;
+  scrollbar-color: var(--hairline) transparent;
+}
+.line-view::-webkit-scrollbar, .overview::-webkit-scrollbar, .modal::-webkit-scrollbar { width: 5px; }
+.line-view::-webkit-scrollbar-track, .overview::-webkit-scrollbar-track, .modal::-webkit-scrollbar-track { background: transparent; }
+.line-view::-webkit-scrollbar-thumb, .overview::-webkit-scrollbar-thumb, .modal::-webkit-scrollbar-thumb {
+  background: var(--hairline);
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+}
+.line-view:hover::-webkit-scrollbar-thumb, .overview:hover::-webkit-scrollbar-thumb, .modal:hover::-webkit-scrollbar-thumb {
+  background: var(--muted);
+  background-clip: padding-box;
+}
+
 html, body, #root { height: 100%; margin: 0; }
 body { background: var(--bg); overflow: hidden; }
 button, input, textarea { font: inherit; color: inherit; }
