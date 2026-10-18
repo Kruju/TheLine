@@ -270,39 +270,29 @@ button { cursor: pointer; }
   border-bottom: 1px solid var(--hairline);
   border-radius: 0;
   background: transparent;
-  transition: opacity 0.3s;
+  cursor: pointer;
+  transform: scale(1);
+  transition: transform 0.15s ease, border-color 0.2s;
 }
-.card:hover { opacity: 0.85; }
-.card.is-focused { opacity: 1; }
-.card-node {
-  position: absolute;
-  left: -17px;
-  top: 24px;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  border: 1px solid var(--muted);
-  background: var(--bg);
-}
-.card.is-focused .card-node { background: var(--text); border-color: var(--text); }
+.card:hover, .card:focus-visible { transform: scale(1.012); border-color: var(--text); z-index: 1; }
+.card.is-focused { border-color: var(--text); }
 
 .card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 0.78rem; }
 .kind { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-weight: 500; letter-spacing: 0.02em; text-transform: uppercase; font-size: 0.72rem; }
 .kind-glyph { width: 1em; text-align: center; color: var(--muted); }
 .card-head time { color: var(--faint); font-variant-numeric: tabular-nums; }
 
-.ai-toggle {
+.ai-lock {
+  display: inline-flex;
   margin-left: auto;
-  padding: 0;
+  padding: 2px;
   border: 0;
   border-radius: 0;
   background: transparent;
   color: var(--faint);
-  font-size: 0.7rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
 }
-.ai-toggle.is-on { color: var(--text); }
+.ai-lock:hover { color: var(--text); }
+.ai-lock.is-open { color: var(--text); }
 
 .card-title { margin: 2px 0 8px; font-size: 1.02rem; font-weight: 500; }
 .card-quote {
@@ -377,7 +367,16 @@ button { cursor: pointer; }
   opacity: 0.6;
 }
 .ai-plan li { position: relative; display: flex; flex-direction: column; gap: 4px; padding: 10px 0 16px; border-bottom: 1px solid var(--hairline); }
-.ai-plan .card-node { top: 13px; border-style: dashed; }
+.ai-plan .card-node {
+  position: absolute;
+  left: -17px;
+  top: 13px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: 1px dashed var(--muted);
+  background: var(--bg);
+}
 .ai-plan span:last-child { color: var(--muted); font-size: 0.9rem; }
 
 /* ---------- Overview ---------- */
